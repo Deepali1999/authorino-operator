@@ -192,12 +192,13 @@ jobs:
           opm: "4.14.4"
       - name: Set permissions for build script
         run: chmod +x ./scripts/build_catalog.sh
-      - name: Login to Quay.io
-        uses: docker/login-action@v1
+        
+      - name: Login to Quay
+        uses: docker/login-action@v3
         with:
-          registry: ${{ secrets.IMG_REGISTRY_HOST || 'quay.io' }}
-          username: ${{ secrets.IMG_REGISTRY_USERNAME }}
-          password: ${{ secrets.IMG_REGISTRY_TOKEN }}
+          registry: quay.io
+          username: ${{ secrets.QUAY_USER }}
+          password: ${{ secrets.QUAY_PASSWORD }}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
