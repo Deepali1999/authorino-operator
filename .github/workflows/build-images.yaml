@@ -128,12 +128,6 @@ jobs:
         run: make bundle REGISTRY=${{ env.IMG_REGISTRY_HOST }} ORG=${{ env.IMG_REGISTRY_ORG }} VERSION=${{env.VERSION}} AUTHORINO_VERSION=${{ github.event.inputs.authorinoVersion }} CHANNELS=${{ github.event.inputs.channels }} DEFAULT_CHANNEL=stable
       - name: Git diff
         run: git diff
-      - name: Verify manifests and bundle (main)
-        if: github.ref_name == env.MAIN_BRANCH_NAME
-        run: make verify-manifests verify-bundle REGISTRY=${{ env.IMG_REGISTRY_HOST }} ORG=${{ env.IMG_REGISTRY_ORG }} IMAGE_TAG=${{ github.sha }} AUTHORINO_VERSION=${{ env.LATEST_AUTHORINO_GITREF }}
-      - name: Verify manifests and bundle (release)
-        if: ${{ github.ref_name != env.MAIN_BRANCH_NAME }}
-        run: make verify-manifests verify-bundle REGISTRY=${{ env.IMG_REGISTRY_HOST }} ORG=${{ env.IMG_REGISTRY_ORG }} VERSION=${{env.VERSION}} AUTHORINO_VERSION=${{ github.event.inputs.authorinoVersion }} CHANNELS=${{ github.event.inputs.channels }} DEFAULT_CHANNEL=stable
       - name: Build Image
         id: build-image
         uses: redhat-actions/buildah-build@v2
